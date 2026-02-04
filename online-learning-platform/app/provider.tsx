@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Provider({ children }) {
+function Provider({ children }: { children: React.ReactNode }) {
   return (
     <div>{ children }</div>
   )
