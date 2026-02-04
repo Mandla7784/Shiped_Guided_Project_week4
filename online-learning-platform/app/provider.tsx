@@ -2,11 +2,13 @@
 import React from 'react'
 import { useUser } from '@clerk/nextjs'
 import axios from 'axios'
-import { useEffect } from 'react';
+import { useEffect , useState} from 'react';
+import { UserDetailContext } from '@/context/UserDetailContext';
 
 function Provider({ children }: { children: React.ReactNode }) {
    const { user } = useUser();
-     
+     const [userDetail, setUserDetail] = useState();
+
    useEffect(()=>{
     user && CreateNewUser();
    },[user])
@@ -25,12 +27,16 @@ function Provider({ children }: { children: React.ReactNode }) {
           email: user?.primaryEmailAddress?.emailAddress
          })
          console.log('User created:', results.data)
+         setUserDetail(results.data);
        } catch (error) {
          console.error('Error creating user:', error)
        }
     }
   return (
+    <UserDetailContext.Provider value={{userDetail , setUserDetail}}>
     <div>{ children }</div>
+    </UserDetailContext.Provider>
+
   )
 }
 
