@@ -14,6 +14,12 @@ function Provider({ children }: { children: React.ReactNode }) {
 
     const CreateNewUser = async ()=>{
        try {
+         console.log('User data:', { 
+           fullName: user?.fullName, 
+           email: user?.primaryEmailAddress?.emailAddress,
+           emailAddresses: user?.emailAddresses 
+         })
+         
          const results = await axios.post("/api/user" ,{
           name: user?.fullName,
           email: user?.primaryEmailAddress?.emailAddress
