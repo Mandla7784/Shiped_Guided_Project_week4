@@ -1,4 +1,3 @@
-
 import { usersTable } from "@/config/schema";
 import { NextResponse, NextRequest } from "next/server";
 import { db } from "@/config/db";
@@ -21,10 +20,11 @@ export async function POST(req: NextRequest) {
             email: userEmail,
             age: 0,
             subscribtion: 'free'
-        })
+        }) 
+        return NextResponse.json(results)
 
     }
 
 
-    return NextResponse.json({})
+    return NextResponse.json(users[0]);
 }
