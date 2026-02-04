@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
             email: userEmail,
             age: 0,
             subscribtion: 'free'
-        }) 
+        }).returning() 
         return NextResponse.json(results)
 
     }

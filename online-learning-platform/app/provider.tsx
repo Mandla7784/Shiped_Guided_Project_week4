@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 import { useUser } from '@clerk/nextjs'
 import axios from 'axios'
@@ -11,14 +12,16 @@ function Provider({ children }: { children: React.ReactNode }) {
    },[user])
 
 
-
-
     const CreateNewUser = async ()=>{
-       const results = await axios.post("/api/user" ,{
-        name: user?.fullName,
-        email: user?.primaryEmailAddress?.emailAddress
-       })
-
+       try {
+         const results = await axios.post("/api/user" ,{
+          name: user?.fullName,
+          email: user?.primaryEmailAddress?.emailAddress
+         })
+         console.log('User created:', results.data)
+       } catch (error) {
+         console.error('Error creating user:', error)
+       }
     }
   return (
     <div>{ children }</div>
