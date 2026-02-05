@@ -62,7 +62,9 @@ export default function AppSidebar() {
               <SidebarMenuItem key={option.path}>
                 <SidebarMenuButton
                   asChild
-                  className={path === option.path ? "bg-purple-600 text-white" : ""}
+                  className={
+                    path === option.path ? "text-purple-600 font-bold" : ""
+                  }
                 >
                   <Link href={option.path}>
                     <option.icon className="w-4 h-4" />

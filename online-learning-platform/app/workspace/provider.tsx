@@ -2,6 +2,7 @@ import React from 'react'
 
 import { SidebarProvider, SidebarTrigger, SidebarInset } from '@/components/ui/sidebar'
 import AppSidebar from './_components/AppSidebar'
+import AppHeader from './_components/AppHeader'
 
 export default function WorkspaceProvider({children}: { children: React.ReactNode }) {
   return (
@@ -12,7 +13,7 @@ export default function WorkspaceProvider({children}: { children: React.ReactNod
           <SidebarTrigger className="-ml-1" />
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4">
-          {children}
+          <Appldren}
         </div>
       </SidebarInset>
     </SidebarProvider>
