@@ -1,4 +1,5 @@
 import React from 'react'
+import { usePathname } from 'next/navigation'path 
 import {
   Sidebar,
   SidebarContent,
@@ -43,6 +44,10 @@ const sideBarOptions = [
 ]
 
 export default function AppSidebar() {
+  const path = usePathname()
+
+
+
   return (
     <Sidebar>
       <SidebarHeader className="p-4">
