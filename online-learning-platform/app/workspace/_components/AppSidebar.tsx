@@ -10,7 +10,9 @@ import {
 export default function AppSidebar() {
   return (
   <Sidebar>
-      <SidebarHeader />
+      <SidebarHeader >
+        
+      </SidebarHeader>
       <SidebarContent>
         <SidebarGroup />
         <SidebarGroup />
