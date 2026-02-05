@@ -32,6 +32,7 @@ function Provider({ children }: { children: React.ReactNode }) {
          console.error('Error creating user:', error)
        }
     }
+    
   return (
     <UserDetailContext.Provider value={{userDetail , setUserDetail}}>
     <div>{ children }</div>
