@@ -6,7 +6,7 @@ export default function CourseList() {
     <div className="mt-8 text-center p-10 border rounded-lg">
       <h2 className="text-2xl font-bold mb-2">Create Your Course</h2>
       <p className="mb-4 text-gray-500">Get started by creating your first course.</p>
-      <Button> + Create your first course</Button>
+      <Button className="bg-purple-600 text-white hover:bg-purple-700"> + Create your first course</Button>
     </div>
   )
 }
