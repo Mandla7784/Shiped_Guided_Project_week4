@@ -13,7 +13,8 @@ export default function WorkspaceProvider({children}: { children: React.ReactNod
           <SidebarTrigger className="-ml-1" />
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4">
-          <Appldren}
+          <AppHeader />
+          {children}
         </div>
       </SidebarInset>
     </SidebarProvider>
