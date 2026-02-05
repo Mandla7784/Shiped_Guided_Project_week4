@@ -56,7 +56,7 @@ export default function AppSidebar() {
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <Button className="mb-4">Create New Course</Button>
+          <Button className="mb-4 bg-purple-600 text-white hover:bg-purple-700">Create New Course</Button>
           <SidebarMenu>
             {sideBarOptions.map((option) => (
               <SidebarMenuItem key={option.path}>
