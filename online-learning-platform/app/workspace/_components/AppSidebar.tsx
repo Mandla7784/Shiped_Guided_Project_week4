@@ -1,5 +1,6 @@
+"use client"
 import React from 'react'
-import { usePathname } from 'next/navigation'path 
+import { usePathname } from 'next/navigation'
 import {
   Sidebar,
   SidebarContent,
@@ -59,7 +60,10 @@ export default function AppSidebar() {
           <SidebarMenu>
             {sideBarOptions.map((option) => (
               <SidebarMenuItem key={option.path}>
-                <SidebarMenuButton asChild>
+                <SidebarMenuButton
+                  asChild
+                  className={path === option.path ? "bg-purple-600 text-white" : ""}
+                >
                   <Link href={option.path}>
                     <option.icon className="w-4 h-4" />
                     <span>{option.title}</span>
