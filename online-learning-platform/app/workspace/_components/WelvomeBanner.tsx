@@ -5,7 +5,7 @@ export default function WelvomeBanner() {
     <div className='p-5'>
         <h2>Welcome to Online Learning </h2>
         
-        
+         <p>Learn , Create and Explore Your favourite courses</p>
    
         
         </div>
