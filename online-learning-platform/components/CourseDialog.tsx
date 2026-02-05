@@ -17,6 +17,13 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import React from 'react'
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -25,6 +32,12 @@ import * as z from "zod"
 const formSchema = z.object({
   title: z.string().min(1, "Course title is required"),
   description: z.string().min(1, "Course description is required"),
+  videoUrl: z.string().url("Please enter a valid video URL").optional().or(z.literal("")),
+  difficulty: z.string().min(1, "Please select a difficulty level"),
+  chapters: z.string().min(1, "Number of chapters is required").refine((val) => {
+    const num = parseInt(val)
+    return !isNaN(num) && num > 0 && num <= 50
+  }, "Chapters must be a number between 1 and 50"),
 })
 
 interface CourseDialogProps {
@@ -38,6 +51,9 @@ export default function CourseDialog({ open, onOpenChange }: CourseDialogProps) 
     defaultValues: {
       title: "",
       description: "",
+      videoUrl: "",
+      difficulty: "",
+      chapters: "",
     },
   })
 
@@ -82,6 +98,60 @@ export default function CourseDialog({ open, onOpenChange }: CourseDialogProps) 
                     <Textarea 
                       placeholder="Enter course description" 
                       className="resize-none" 
+                      {...field} 
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="videoUrl"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Video URL (Optional)</FormLabel>
+                  <FormControl>
+                    <Input placeholder="https://youtube.com/watch?v=..." {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="difficulty"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Difficulty Level</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select difficulty level" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="beginner">Beginner</SelectItem>
+                      <SelectItem value="intermediate">Intermediate</SelectItem>
+                      <SelectItem value="advanced">Advanced</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="chapters"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Number of Chapters</FormLabel>
+                  <FormControl>
+                    <Input 
+                      type="number" 
+                      placeholder="Enter number of chapters (1-50)" 
+                      min="1" 
+                      max="50" 
                       {...field} 
                     />
                   </FormControl>
