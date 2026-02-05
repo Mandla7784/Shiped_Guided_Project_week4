@@ -8,7 +8,7 @@ import { UserButton } from '@clerk/nextjs'
 
 export default function AppHeader() {
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex h-16 shrink-0 items-center justify-between border-b bg-background px-4 shadow-sm">
         <SidebarTrigger/>
         <UserButton/>
     </div>
