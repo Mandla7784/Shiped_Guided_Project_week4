@@ -11,7 +11,10 @@ export default function WorkspaceProvider({children}: { children: React.ReactNod
       <SidebarInset>
         <div className="flex flex-1 flex-col">
           <AppHeader/>
-          {children}
+          <div className='p-10'>
+            {children}
+          </div>
+        
         </div>
       </SidebarInset>
     </SidebarProvider>
