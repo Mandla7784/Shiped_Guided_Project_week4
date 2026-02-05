@@ -1,7 +1,14 @@
 import React from 'react'
 
+import { SidebarProvider , SidebarTrigger } from '@/components/ui/sidebar'
+
+
 export default function WorkspaceProvider({children}: { children: React.ReactNode }) {
   return (
-    <div>{ children }</div>
+    <SidebarProvider>
+    <SidebarTrigger />
+       <div>{ children }</div>
+    </SidebarProvider>
+
   )
 }
