@@ -24,6 +24,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { Sparkles } from "lucide-react"
 import React from 'react'
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -32,6 +33,7 @@ import * as z from "zod"
 const formSchema = z.object({
   title: z.string().min(1, "Course title is required"),
   description: z.string().min(1, "Course description is required"),
+  category: z.string().min(1, "Please select a category"),
   videoUrl: z.string().url("Please enter a valid video URL").optional().or(z.literal("")),
   difficulty: z.string().min(1, "Please select a difficulty level"),
   chapters: z.string().min(1, "Number of chapters is required").refine((val) => {
@@ -51,6 +53,7 @@ export default function CourseDialog({ open, onOpenChange }: CourseDialogProps) 
     defaultValues: {
       title: "",
       description: "",
+      category: "",
       videoUrl: "",
       difficulty: "",
       chapters: "",
@@ -101,6 +104,35 @@ export default function CourseDialog({ open, onOpenChange }: CourseDialogProps) 
                       {...field} 
                     />
                   </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="category"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Category</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a category" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="programming">Programming</SelectItem>
+                      <SelectItem value="design">Design</SelectItem>
+                      <SelectItem value="business">Business</SelectItem>
+                      <SelectItem value="marketing">Marketing</SelectItem>
+                      <SelectItem value="data-science">Data Science</SelectItem>
+                      <SelectItem value="photography">Photography</SelectItem>
+                      <SelectItem value="music">Music</SelectItem>
+                      <SelectItem value="language">Language</SelectItem>
+                      <SelectItem value="health">Health & Fitness</SelectItem>
+                      <SelectItem value="other">Other</SelectItem>
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
@@ -168,7 +200,8 @@ export default function CourseDialog({ open, onOpenChange }: CourseDialogProps) 
                 Cancel
               </Button>
               <Button type="submit" className="bg-purple-600 hover:bg-purple-700">
-                Create Course
+                <Sparkles className="w-4 h-4 mr-2" />
+                Generate Course
               </Button>
             </div>
           </form>
