@@ -46,7 +46,7 @@ export default function AppSidebar() {
   return (
     <Sidebar>
       <SidebarHeader className="p-4">
-        <Image src="/logo.svg" alt="logo" width={130} height={100} />
+        <Image src="/logo.svg" alt="logo" width={80} height={80} />
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
