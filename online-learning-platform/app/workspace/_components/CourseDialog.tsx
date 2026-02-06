@@ -85,8 +85,10 @@ export default function CourseDialog({ open, onOpenChange }: CourseDialogProps) 
       console.log('Course generated:', results.data)
       onOpenChange(false)
       form.reset()
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error generating course:', error)
+      console.error('Error response:', error.response?.data)
+      alert(`Error: ${error.response?.data?.error || 'Failed to generate course'}\nDetails: ${error.response?.data?.details || 'Unknown error'}`)
     } finally {
       setLoading(false)
     }
