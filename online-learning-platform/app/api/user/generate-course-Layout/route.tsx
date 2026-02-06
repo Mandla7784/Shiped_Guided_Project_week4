@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { GoogleGenerativeAI } from '@google/generative-ai'
+import { db } from '@/config/db'
+import { courseTable } from '@/config/schema'
 
 export async function POST(req: NextRequest) {
   const formData = await req.json()
@@ -41,8 +43,22 @@ JSON Schema:
     const text = response.text()
 
     console.log(text)
+
+    // Parse the JSON response and save to database
+    const courseData = JSON.parse(text)
+    const results = await db.insert(courseTable).values({
+      cid: Date.now(),
+      name: courseData.course.name,
+      description: courseData.course.description,
+      noOfChapters: formData.chapters,
+      includeVideo: formData.includeVideo || false,
+      level: formData.difficulty,
+      category: formData.category,
+      courseJson: courseData,
+      userEmail: formData.userEmail
+    })
     
-    return NextResponse.json({ course: text })
+    return NextResponse.json({ course: courseData, dbResult: results })
   } catch (error) {
     console.error('Error generating course:', error)
     return NextResponse.json({ error: 'Failed to generate course' }, { status: 500 })
