@@ -6,15 +6,15 @@ import { eq } from "drizzle-orm";
 
 
 export async function POST(req: NextRequest) {
-    const {userEmail, name }  = await req.json()
+    const {email, name }  = await req.json()
 
-    if (!userEmail) {
+    if (!email) {
         return NextResponse.json({ error: 'Email is required' }, { status: 400 })
     }
 
     // here we selecting the user if already exist 
     const users = await db.select().from(usersTable)
-    .where(eq(usersTable.email, userEmail))
+    .where(eq(usersTable.email, email))
 
 
     // otherwise insert to table 
@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
     if(users?.length == 0){
         const results = await db.insert(usersTable).values({
             name: name || 'Unknown',
-            email: userEmail,
+            email: email,
             age: 0,
             subscribtion: 'free'
         }) 
