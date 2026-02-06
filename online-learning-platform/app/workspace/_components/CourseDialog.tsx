@@ -24,7 +24,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Sparkles } from "lucide-react"
+import { Sparkles, Loader2 } from "lucide-react"
 import React, { useState } from 'react'
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -231,7 +231,11 @@ export default function CourseDialog({ open, onOpenChange }: CourseDialogProps) 
                 Cancel
               </Button>
               <Button type="submit" className="bg-purple-600 hover:bg-purple-700" disabled={loading}>
-                <Sparkles className="w-4 h-4 mr-2" />
+                {loading ? (
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                ) : (
+                  <Sparkles className="w-4 h-4 mr-2" />
+                )}
                 {loading ? 'Generating...' : 'Generate Course'}
               </Button>
             </div>
