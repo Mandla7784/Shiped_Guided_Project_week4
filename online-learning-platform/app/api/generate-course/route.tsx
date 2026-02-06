@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
   console.log(formData)
 
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '')
-  const model = genAI.getGenerativeModel({ model: 'gemini-pro' })
+  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' })
 
   const prompt = `Generate a Learning Course based on the following details:
 Topic: ${formData.topic}
@@ -19,7 +19,7 @@ Category: ${formData.category}
 Difficulty: ${formData.difficulty}
 Chapters: ${formData.chapters}
 
-Create a JSON response with:
+Create ONLY a JSON response (no markdown, no explanation) with:
 - Course name
 - Description
 - Banner image prompt (modern, flat style 2D digital illustration)
@@ -61,7 +61,7 @@ JSON Schema:
       level: formData.difficulty,
       category: formData.category,
       courseJson: courseData,
-      userEmail: user?.primaryEmailAddress?.emailAddress  || formData.userEmail
+      userEmail: user?.primaryEmailAddress?.emailAddress || formData.userEmail
     })
     
     return NextResponse.json({ course: courseData, dbResult: results })
