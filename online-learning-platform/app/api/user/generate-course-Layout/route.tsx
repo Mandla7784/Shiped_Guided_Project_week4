@@ -3,8 +3,11 @@ import { GoogleGenerativeAI } from '@google/generative-ai'
 import { db } from '@/config/db'
 import { courseTable } from '@/config/schema'
 
+import { currentUser } from '@clerk/nextjs/server'
+
 export async function POST(req: NextRequest) {
   const formData = await req.json()
+  const user = await currentUser()
   console.log(formData)
 
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '')
@@ -55,7 +58,7 @@ JSON Schema:
       level: formData.difficulty,
       category: formData.category,
       courseJson: courseData,
-      userEmail: formData.userEmail
+      userEmail: user?.primaryEmailAddress?.emailAddress  || formData.userEmail
     })
     
     return NextResponse.json({ course: courseData, dbResult: results })
