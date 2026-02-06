@@ -1,6 +1,4 @@
-import { duration } from "drizzle-orm/gel-core";
-import { integer, pgTable, varchar } from "drizzle-orm/pg-core";
-import { boolean, json } from "zod";
+import { integer, pgTable, varchar, boolean, json } from "drizzle-orm/pg-core";
 
 export const usersTable = pgTable("users", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -10,17 +8,15 @@ export const usersTable = pgTable("users", {
   subscribtion: varchar({ length: 255 }).notNull(),
 });
 
-
 export const courseTable = pgTable("courses", {
   id: integer("id").primaryKey().notNull(),
   cid: integer("cid").notNull(),
   name: varchar("name", { length: 255 }).notNull(),
   description: varchar("description", { length: 255 }).notNull(),
   noOfChapters: integer("noOfChapters").notNull(),
-  includeVideo:boolean("includeVideo"),
-  level:varchar(),
-  category:varchar(),
-  courseJson:json(),
-  userEmail:varchar('userEmail').references(()=>usersTable.email))
- 
+  includeVideo: boolean("includeVideo").default(false),
+  level: varchar("level", { length: 50 }),
+  category: varchar("category", { length: 100 }),
+  courseJson: json("courseJson"),
+  userEmail: varchar('userEmail').references(()=>usersTable.email)
 });
