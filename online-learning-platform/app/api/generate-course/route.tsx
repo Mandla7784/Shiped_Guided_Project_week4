@@ -43,9 +43,12 @@ JSON Schema:
   try {
     const result = await model.generateContent(prompt)
     const response = await result.response
-    const text = response.text()
+    let text = response.text()
 
-    console.log(text)
+    console.log('Raw response:', text)
+
+    // Remove markdown code blocks if present
+    text = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim()
 
     // Parse the JSON response and save to database
     const courseData = JSON.parse(text)
@@ -64,7 +67,7 @@ JSON Schema:
     return NextResponse.json({ course: courseData, dbResult: results })
   } catch (error) {
     console.error('Error generating course:', error)
-    return NextResponse.json({ error: 'Failed to generate course' }, { status: 500 })
+    return NextResponse.json({ error: 'Failed to generate course', details: error instanceof Error ? error.message : 'Unknown error' }, { status: 500 })
   }
 }
 

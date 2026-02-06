@@ -15,7 +15,7 @@ import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import { LayoutDashboard, CreditCard, User, BookOpen, Settings } from 'lucide-react'
 import Link from 'next/link'
-import CourseDialog from '@/components/CourseDialog'
+import CourseDialog from './CourseDialog'
 
 const sideBarOptions = [
   {
