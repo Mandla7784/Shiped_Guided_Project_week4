@@ -53,6 +53,7 @@ interface CourseDialogProps {
 
 export default function CourseDialog({ open, onOpenChange }: CourseDialogProps) {
   const [includeVideo, setIncludeVideo] = useState(false)
+  const [loading, setLoading] = useState(false)
   
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -68,20 +69,27 @@ export default function CourseDialog({ open, onOpenChange }: CourseDialogProps) 
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values)
+    setLoading(true)
 
-    const results = await axios.post('/api/generate-course', {
-      topic: values.title,
-      description: values.description,
-      category: values.category,
-      difficulty: values.difficulty,
-      chapters: parseInt(values.chapters),
-      includeVideo: includeVideo,
-      videoUrl: values.videoUrl
-    })
-    
-    console.log('Course generated:', results.data)
-    onOpenChange(false)
-    form.reset()
+    try {
+      const results = await axios.post('/api/generate-course', {
+        topic: values.title,
+        description: values.description,
+        category: values.category,
+        difficulty: values.difficulty,
+        chapters: parseInt(values.chapters),
+        includeVideo: includeVideo,
+        videoUrl: values.videoUrl
+      })
+      
+      console.log('Course generated:', results.data)
+      onOpenChange(false)
+      form.reset()
+    } catch (error) {
+      console.error('Error generating course:', error)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -222,9 +230,9 @@ export default function CourseDialog({ open, onOpenChange }: CourseDialogProps) 
               >
                 Cancel
               </Button>
-              <Button type="submit" className="bg-purple-600 hover:bg-purple-700">
+              <Button type="submit" className="bg-purple-600 hover:bg-purple-700" disabled={loading}>
                 <Sparkles className="w-4 h-4 mr-2" />
-                Generate Course
+                {loading ? 'Generating...' : 'Generate Course'}
               </Button>
             </div>
           </form>
