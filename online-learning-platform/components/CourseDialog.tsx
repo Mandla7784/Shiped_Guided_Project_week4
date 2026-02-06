@@ -25,10 +25,15 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Sparkles } from "lucide-react"
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
+import { Switch } from "@/components/ui/switch"
+import { Label } from "@/components/ui/label"
+
+
+
 
 const formSchema = z.object({
   title: z.string().min(1, "Course title is required"),
@@ -48,6 +53,8 @@ interface CourseDialogProps {
 }
 
 export default function CourseDialog({ open, onOpenChange }: CourseDialogProps) {
+  const [includeVideo, setIncludeVideo] = useState(false)
+  
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -137,19 +144,25 @@ export default function CourseDialog({ open, onOpenChange }: CourseDialogProps) 
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="videoUrl"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Video URL (Optional)</FormLabel>
-                  <FormControl>
-                    <Input placeholder="https://youtube.com/watch?v=..." {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <div className="flex items-center space-x-2">
+              <Switch id="include-video" checked={includeVideo} onCheckedChange={setIncludeVideo} />
+              <Label htmlFor="include-video">Include video</Label>
+            </div>
+            {includeVideo && (
+              <FormField
+                control={form.control}
+                name="videoUrl"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Video URL</FormLabel>
+                    <FormControl>
+                      <Input placeholder="https://youtube.com/watch?v=..." {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
             <FormField
               control={form.control}
               name="difficulty"
