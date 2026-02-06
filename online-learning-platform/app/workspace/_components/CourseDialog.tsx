@@ -31,8 +31,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
-
-
+import axios from 'axios'
 
 
 const formSchema = z.object({
@@ -67,9 +66,20 @@ export default function CourseDialog({ open, onOpenChange }: CourseDialogProps) 
     },
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values)
-    // TODO: Add API call to create course
+
+    const results = await axios.post('/api/generate-course', {
+      topic: values.title,
+      description: values.description,
+      category: values.category,
+      difficulty: values.difficulty,
+      chapters: parseInt(values.chapters),
+      includeVideo: includeVideo,
+      videoUrl: values.videoUrl
+    })
+    
+    console.log('Course generated:', results.data)
     onOpenChange(false)
     form.reset()
   }
