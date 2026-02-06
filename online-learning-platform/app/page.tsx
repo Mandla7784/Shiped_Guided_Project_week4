@@ -1,8 +1,22 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
-import { UserButton } from "@clerk/nextjs";
+import { UserButton, useUser, SignInButton } from "@clerk/nextjs";
 import Image from "next/image";
 
 export default function Home() {
+  const { isSignedIn } = useUser();
+
+  const handleMyLearning = () => {
+    if (isSignedIn) {
+      window.location.href =
+        "https://3000-cs-265260782811-default.cs-europe-west1-iuzs.cloudshell.dev/workspace";
+    } else {
+      // Redirect to Clerk sign-in
+      window.location.href = "/sign-in";
+    }
+  };
+
   return (
     <main className="min-h-screen flex flex-col">
       
@@ -15,7 +29,10 @@ export default function Home() {
           </p>
         </div>
 
-        <UserButton />
+        <div className="flex items-center gap-4">
+          <Button size="sm">Get Started</Button>
+          <UserButton />
+        </div>
       </header>
 
       {/* Hero Section */}
@@ -30,7 +47,7 @@ export default function Home() {
           className="object-cover"
         />
 
-        {/* Dark RGBA Overlay */}
+        {/* Dark Overlay */}
         <div className="absolute inset-0 bg-[rgba(0,0,0,0.7)]" />
 
         {/* Content */}
@@ -52,6 +69,7 @@ export default function Home() {
             <Button
               variant="outline"
               className="text-white border-white shadow-lg"
+              onClick={handleMyLearning}
             >
               My Learning
             </Button>
