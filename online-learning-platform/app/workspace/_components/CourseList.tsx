@@ -4,7 +4,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import React, { useState } from 'react'
-import CourseDialog from '@/components/CourseDialog'
+import CourseDialog from './CourseDialog'
 
 export default function CourseList() {
   const [open, setOpen] = useState(false)
