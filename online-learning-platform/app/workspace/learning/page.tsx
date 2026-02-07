@@ -12,12 +12,13 @@ export default function MyLearningPage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch("/api/enrollments").then((r) => r.json()).then((d) => setEnrolledCids(Array.isArray(d) ? d : [])).catch(() => [])
-    fetch("/api/courses").then((r) => r.json()).then((d) => setCourses(Array.isArray(d) ? d : [])).catch(() => [])
+    Promise.all([
+      fetch("/api/enrollments").then((r) => r.json()).then((d) => setEnrolledCids(Array.isArray(d) ? d : [])).catch(() => []),
+      fetch("/api/courses").then((r) => r.json()).then((d) => setCourses(Array.isArray(d) ? d : [])).catch(() => []),
+    ]).finally(() => setLoading(false))
   }, [])
 
   if (loading) {
-    setTimeout(() => setLoading(false), 500)
     return (
       <div className="flex items-center justify-center min-h-[200px]">
         <Loader2 className="w-8 h-8 animate-spin text-purple-600" />

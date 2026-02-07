@@ -1,6 +1,6 @@
 "use client"
-import React, { useEffect, useState } from 'react'
-import { useParams, useRouter } from 'next/navigation'
+import React, { useEffect, useRef, useState } from 'react'
+import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import axios from 'axios'
@@ -18,13 +18,13 @@ interface Course {
 
 export default function LearnPage() {
   const params = useParams()
-  const router = useRouter()
   const cid = Number(params.cid)
   const [course, setCourse] = useState<Course | null>(null)
   const [completedChapters, setCompletedChapters] = useState<number[]>([])
   const [selectedChapter, setSelectedChapter] = useState(0)
   const [chapterContent, setChapterContent] = useState<string>('')
   const [loadingContent, setLoadingContent] = useState(false)
+  const hasLoadedFirst = useRef(false)
 
   useEffect(() => {
     if (isNaN(cid)) return
@@ -33,6 +33,18 @@ export default function LearnPage() {
   }, [cid])
 
   const chapters = course?.courseJson?.course?.chapters ?? []
+
+  useEffect(() => {
+    if (course && chapters.length > 0 && !hasLoadedFirst.current) {
+      hasLoadedFirst.current = true
+      const ch = chapters[0]
+      setLoadingContent(true)
+      axios.post('/api/generate-content', { courseName: course?.name, chapterName: ch.name, chapterIndex: 0 })
+        .then(({ data }) => setChapterContent(data.content || ''))
+        .catch(() => setChapterContent('Failed to load content.'))
+        .finally(() => setLoadingContent(false))
+    }
+  }, [course, chapters.length])
 
   const loadChapterContent = async (index: number) => {
     setSelectedChapter(index)
