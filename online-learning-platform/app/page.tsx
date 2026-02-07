@@ -9,8 +9,7 @@ export default function Home() {
 
   const handleMyLearning = () => {
     if (isSignedIn) {
-      window.location.href =
-        "https://3000-cs-265260782811-default.cs-europe-west1-iuzs.cloudshell.dev/workspace";
+      window.location.href = "/workspace";
     } else {
       // Redirect to Clerk sign-in
       window.location.href = "/sign-in";
