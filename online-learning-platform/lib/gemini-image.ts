@@ -4,7 +4,7 @@
  * Returns a data URL so the image can be stored in courseJson and displayed without file storage.
  */
 // Gemini native image model (Nano Banana); falls back gracefully if unavailable
-const GEMINI_IMAGE_MODEL = 'gemini-2.5-flash-preview-05-20'
+const GEMINI_IMAGE_MODEL = 'gemini-2.5-flash-image'
 const API_BASE = 'https://generativelanguage.googleapis.com/v1beta'
 
 export async function generateBannerImage(prompt: string): Promise<string | null> {
