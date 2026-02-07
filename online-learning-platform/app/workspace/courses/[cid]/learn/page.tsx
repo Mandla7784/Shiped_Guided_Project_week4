@@ -44,7 +44,7 @@ export default function LearnPage() {
         .catch(() => setChapterContent('Failed to load content.'))
         .finally(() => setLoadingContent(false))
     }
-  }, [course, chapters.length])
+  }, [course?.cid, chapters.length])
 
   const loadChapterContent = async (index: number) => {
     setSelectedChapter(index)
