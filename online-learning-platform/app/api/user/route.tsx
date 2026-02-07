@@ -36,6 +36,13 @@ export async function POST(req: NextRequest) {
         return NextResponse.json(users[0]);
     } catch (error) {
         console.error('Error in user API:', error)
-        return NextResponse.json({ error: 'Internal server error', details: error instanceof Error ? error.message : 'Unknown error' }, { status: 500 })
+        const message = error instanceof Error ? error.message : 'Unknown error'
+        if (message.includes('DATABASE_URL')) {
+            return NextResponse.json(
+                { error: 'Database not configured', details: 'Add DATABASE_URL to .env.local (e.g. from Neon.tech or your Postgres provider).' },
+                { status: 503 }
+            )
+        }
+        return NextResponse.json({ error: 'Internal server error', details: message }, { status: 500 })
     }
 }

@@ -16,19 +16,17 @@ function Provider({ children }: { children: React.ReactNode }) {
 
     const CreateNewUser = async ()=>{
        try {
-         console.log('User data:', { 
-           fullName: user?.fullName, 
-           email: user?.primaryEmailAddress?.emailAddress,
-           emailAddresses: user?.emailAddresses 
-         })
-         
          const results = await axios.post("/api/user" ,{
           name: user?.fullName,
           email: user?.primaryEmailAddress?.emailAddress
          })
-         console.log('User created:', results.data)
          setUserDetail(results.data);
-       } catch (error) {
+       } catch (error: unknown) {
+         if (axios.isAxiosError(error) && error.response?.status === 503) {
+           console.warn('User sync skipped: database not configured. Add DATABASE_URL to .env.local.')
+           setUserDetail({ email: user?.primaryEmailAddress?.emailAddress, name: user?.fullName })
+           return
+         }
          console.error('Error creating user:', error)
        }
     }
