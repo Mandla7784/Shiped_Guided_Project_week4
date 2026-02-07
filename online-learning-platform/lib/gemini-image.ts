@@ -20,7 +20,6 @@ export async function generateBannerImage(prompt: string): Promise<string | null
       contents: [{ parts: [{ text: prompt }] }],
       generationConfig: {
         responseModalities: ['TEXT', 'IMAGE'],
-        responseMimeType: 'text/plain',
       },
     }
 
