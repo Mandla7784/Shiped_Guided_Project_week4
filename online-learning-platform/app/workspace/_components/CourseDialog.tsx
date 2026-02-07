@@ -82,9 +82,9 @@ export default function CourseDialog({ open, onOpenChange }: CourseDialogProps) 
         videoUrl: values.videoUrl
       })
       
-      console.log('Course generated:', results.data)
       onOpenChange(false)
       form.reset()
+      if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('course-created'))
     } catch (error: any) {
       console.error('Error generating course:', error)
       console.error('Error response:', error.response?.data)
