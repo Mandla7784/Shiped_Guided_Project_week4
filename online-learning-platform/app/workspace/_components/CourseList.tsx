@@ -19,7 +19,8 @@ export default function CourseList() {
   const [courses, setCourses] = useState<Course[]>([])
   const [loading, setLoading] = useState(true)
 
-  const fetchCourses = () => {
+  const fetchCourses = (showLoading = true) => {
+    if (showLoading) setLoading(true)
     axios.get<Course[]>('/api/courses').then((res) => {
       setCourses(res.data || [])
     }).catch(() => setCourses([])).finally(() => setLoading(false))
@@ -30,7 +31,7 @@ export default function CourseList() {
   }, [])
 
   useEffect(() => {
-    const handler = () => fetchCourses()
+    const handler = () => fetchCourses(false)
     window.addEventListener('course-created', handler)
     return () => window.removeEventListener('course-created', handler)
   }, [])
