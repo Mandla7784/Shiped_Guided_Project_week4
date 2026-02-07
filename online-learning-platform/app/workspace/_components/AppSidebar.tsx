@@ -13,36 +13,17 @@ import {
 } from "@/components/ui/sidebar"
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
-import { LayoutDashboard, CreditCard, User, BookOpen, Settings } from 'lucide-react'
+import { LayoutDashboard, CreditCard, User, BookOpen, Settings, Compass } from 'lucide-react'
 import Link from 'next/link'
 import CourseDialog from './CourseDialog'
 
 const sideBarOptions = [
-  {
-    title: "Workspace",
-    icon: LayoutDashboard,
-    path: "/workspace"
-  },
-  {
-    title: "Billing",
-    icon: CreditCard,
-    path: "/workspace/billing"
-  },
-  {
-    title: "Profile",
-    icon: User,
-    path: "/workspace/profile"
-  },
-  {
-    title: "My Learning",
-    icon: BookOpen,
-    path: "/workspace/learning"
-  },
-  {
-    title: "Settings",
-    icon: Settings,
-    path: "/workspace/settings"
-  }
+  { title: "Dashboard", icon: LayoutDashboard, path: "/workspace" },
+  { title: "Explore Courses", icon: Compass, path: "/workspace/courses" },
+  { title: "My Learning", icon: BookOpen, path: "/workspace/learning" },
+  { title: "Billing", icon: CreditCard, path: "/workspace/billing" },
+  { title: "Profile", icon: User, path: "/workspace/profile" },
+  { title: "Settings", icon: Settings, path: "/workspace/settings" },
 ]
 
 export default function AppSidebar() {
