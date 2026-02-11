@@ -85,6 +85,7 @@ JSON Schema:
       description: course.description,
       noOfChapters: Number(formData.chapters) || course.chapters.length,
       includeVideo: formData.includeVideo === true,
+      videoUrl: formData.videoUrl || undefined,
       level: formData.difficulty || undefined,
       category: formData.category || undefined,
       courseJson: courseData,

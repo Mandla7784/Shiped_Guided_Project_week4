@@ -15,6 +15,7 @@ export const courseTable = pgTable("courses", {
   description: varchar("description", { length: 255 }).notNull(),
   noOfChapters: integer("noOfChapters").notNull(),
   includeVideo: boolean("includeVideo").default(false),
+  videoUrl: varchar("videoUrl", { length: 500 }),
   level: varchar("level", { length: 50 }),
   category: varchar("category", { length: 100 }),
   courseJson: json("courseJson"),

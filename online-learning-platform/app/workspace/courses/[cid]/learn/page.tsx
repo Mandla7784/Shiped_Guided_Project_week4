@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { Check, ChevronLeft, Loader2 } from "lucide-react";
+import { extractYouTubeVideoId, getYouTubeEmbedUrl } from "@/lib/youtube-utils";
 
 interface CourseJson {
   course?: {
@@ -16,6 +17,8 @@ interface CourseJson {
 interface Course {
   cid: number;
   name: string;
+  includeVideo?: boolean;
+  videoUrl?: string | null;
   courseJson?: CourseJson | null;
 }
 
@@ -100,6 +103,8 @@ export default function LearnPage() {
   }
 
   const currentChapter = chapters[selectedChapter];
+  const videoId = course.includeVideo && course.videoUrl ? extractYouTubeVideoId(course.videoUrl) : null;
+  const embedUrl = videoId ? getYouTubeEmbedUrl(videoId) : null;
 
   return (
     <div className="flex flex-col gap-6">
@@ -138,6 +143,17 @@ export default function LearnPage() {
               <p className="text-sm text-gray-500 mt-1">
                 {currentChapter.duration}
               </p>
+              {embedUrl && (
+                <div className="mt-4 aspect-video w-full rounded-lg overflow-hidden">
+                  <iframe
+                    src={embedUrl}
+                    title={currentChapter.name}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="w-full h-full"
+                  />
+                </div>
+              )}
               <div className="mt-6 prose prose-sm max-w-none">
                 {loadingContent ? (
                   <div className="flex items-center gap-2 text-gray-500">
