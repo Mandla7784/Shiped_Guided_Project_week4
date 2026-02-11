@@ -45,7 +45,10 @@ Provide 2-4 short paragraphs of course content (concepts, examples, key takeaway
         throw modelError
       }
     }
-    
+
+    if (!result) {
+      return NextResponse.json({ error: 'Failed to generate content', details: 'No response from model' }, { status: 500 })
+    }
     const text = result.response.text()
     return NextResponse.json({ content: text || '' })
   } catch (error: any) {

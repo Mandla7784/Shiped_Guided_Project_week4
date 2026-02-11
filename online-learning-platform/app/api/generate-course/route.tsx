@@ -147,6 +147,12 @@ JSON Schema:
         throw modelError
       }
     }
+    if (!result) {
+      return NextResponse.json(
+        { error: 'Empty response from AI', details: 'No response from model' },
+        { status: 500 }
+      )
+    }
     const response = result.response
     const text = response.text()
     
