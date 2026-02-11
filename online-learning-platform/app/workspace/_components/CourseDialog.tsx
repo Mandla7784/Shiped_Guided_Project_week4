@@ -38,7 +38,14 @@ const formSchema = z.object({
   title: z.string().min(1, "Course title is required"),
   description: z.string().min(1, "Course description is required"),
   category: z.string().min(1, "Please select a category"),
-  videoUrl: z.string().url("Please enter a valid video URL").optional().or(z.literal("")),
+  videoUrl: z.string()
+    .optional()
+    .refine((val) => {
+      if (!val || val === "") return true; // Empty is allowed
+      // Check if it's a valid YouTube URL
+      const youtubePattern = /^(https?:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)[a-zA-Z0-9_-]+/;
+      return youtubePattern.test(val) || z.string().url().safeParse(val).success;
+    }, "Please enter a valid YouTube URL"),
   difficulty: z.string().min(1, "Please select a difficulty level"),
   chapters: z.string().min(1, "Number of chapters is required").refine((val) => {
     const num = parseInt(val)
@@ -79,16 +86,27 @@ export default function CourseDialog({ open, onOpenChange }: CourseDialogProps) 
         difficulty: values.difficulty,
         chapters: parseInt(values.chapters),
         includeVideo: includeVideo,
-        videoUrl: values.videoUrl
+        videoUrl: includeVideo && values.videoUrl ? values.videoUrl.trim() : undefined
       })
       
       onOpenChange(false)
       form.reset()
+      setIncludeVideo(false)
       if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('course-created'))
     } catch (error: any) {
       console.error('Error generating course:', error)
       console.error('Error response:', error.response?.data)
       console.error('Full error details:', JSON.stringify(error.response?.data, null, 2))
+      
+      const errorMessage = error.response?.data?.error || 'Failed to create course'
+      const errorDetails = error.response?.data?.details || error.response?.data?.message || ''
+      
+      // Show more detailed error message
+      const fullMessage = errorDetails 
+        ? `${errorMessage}\n\n${errorDetails}` 
+        : errorMessage
+      
+      alert(fullMessage)
     } finally {
       setLoading(false)
     }

@@ -103,8 +103,7 @@ export default function LearnPage() {
   }
 
   const currentChapter = chapters[selectedChapter];
-  const videoId = course.includeVideo && course.videoUrl ? extractYouTubeVideoId(course.videoUrl) : null;
-  const embedUrl = videoId ? getYouTubeEmbedUrl(videoId) : null;
+  const embedUrl = course.includeVideo && course.videoUrl ? getYouTubeEmbedUrl(course.videoUrl) : null;
 
   return (
     <div className="flex flex-col gap-6">

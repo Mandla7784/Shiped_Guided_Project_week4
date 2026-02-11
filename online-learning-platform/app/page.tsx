@@ -5,9 +5,10 @@ import { UserButton, useUser, SignInButton } from "@clerk/nextjs";
 import Image from "next/image";
 
 export default function Home() {
-  const { isSignedIn } = useUser();
+  const { isSignedIn, isLoaded } = useUser();
 
   const handleMyLearning = () => {
+    if (!isLoaded) return;
     if (isSignedIn) {
       window.location.href = "/workspace";
     } else {

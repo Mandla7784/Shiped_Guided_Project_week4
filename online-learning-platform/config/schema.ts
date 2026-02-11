@@ -19,7 +19,7 @@ export const courseTable = pgTable("courses", {
   level: varchar("level", { length: 50 }),
   category: varchar("category", { length: 100 }),
   courseJson: json("courseJson"),
-  userEmail: varchar("userEmail").references(() => usersTable.email),
+  userEmail: varchar("userEmail").references(() => usersTable.email, { onDelete: 'set null' }),
 });
 
 export const enrollmentsTable = pgTable("enrollments", {
