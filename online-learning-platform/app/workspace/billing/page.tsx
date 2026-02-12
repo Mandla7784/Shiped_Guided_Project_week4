@@ -40,6 +40,22 @@ const plans = [
   },
 ]
 
+/**
+ * BillingPage
+ *
+ * This component displays the available plans and pricing for the service. 
+ * It also handles the subscription and payment processing for the user.
+ *
+ * Props: None
+ *
+ * State: 
+ * - currentSubscription: string, the current subscription plan of the user
+ * - loading: boolean, whether the component is loading or not
+ * - paymentDialogOpen: boolean, whether the payment dialog is open or not
+ * - selectedPlan: typeof plans[0] | null, the selected plan by the user
+ * - processing: boolean, whether the payment is being processed or not
+ * - paymentData: { cardNumber: string, expiryDate: string, cvv: string, cardName: string }, the payment data entered by the user
+ */
 export default function BillingPage() {
   const [currentSubscription, setCurrentSubscription] = useState<string>("free")
   const [loading, setLoading] = useState(true)

@@ -58,6 +58,9 @@ interface CourseDialogProps {
   onOpenChange: (open: boolean) => void
 }
 
+
+
+
 export default function CourseDialog({ open, onOpenChange }: CourseDialogProps) {
   const [includeVideo, setIncludeVideo] = useState(false)
   const [loading, setLoading] = useState(false)
